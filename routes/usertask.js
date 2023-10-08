@@ -28,6 +28,44 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Route to update task
+router.get('/:taskId', async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const task = await Task.findOne({ _id: taskId });
+    if(!task){
+      return res.status(404).json({ message: 'Task not found' })
+    }
+    res.json(task)
+  } catch (error) {
+    res.status(500).json({ error : 'Server error'})
+  }
+})
+
+router.put('/:taskId', async (req, res) => {
+  const updatedTaskData = req.body;
+  const taskId = req.params.taskId;
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      taskId,
+      updatedTaskData,
+      { new: true } // Set { new: true } to return the updated task
+    );
+  
+    if (!updatedTask) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+  
+    // Task updated successfully
+    return res.status(200).json(updatedTask);
+  } catch (error) {
+    // Handle errors here
+    console.error('Error updating task:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+
 // Route to delete a task
 router.delete('/:taskId', async (req, res) => {
   try {

@@ -15,10 +15,11 @@ app.use(cors());
 connectDB(); // Call the function to establish the database connection
 
 // all routes-api end points
-app.use('/createtask',router)
-app.use('/gettasks',router)
-app.use('/updatetask',router)
-app.use('/deletetask',router)
+app.use('/create-task',router)
+app.use('/get-tasks',router)
+app.use('/update-task',router)
+app.use('/edited-task',router)
+app.use('/delete-task',router)
 
 // app.get('/', (req, res) => {
 //   res.send('Server is up and running!');
